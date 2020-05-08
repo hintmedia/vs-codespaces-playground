@@ -23,25 +23,6 @@ RUN apt-get update && apt-get install -y \
   vim \
   sudo
 
-# Install Docker (Yes, in docker)
-RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - && \
-  add-apt-repository \
-    "deb [arch=amd64] https://download.docker.com/linux/debian \
-    $(lsb_release -cs) \
-    stable"
-
-RUN apt-get update && apt-get install -y \
-  docker-ce \
-  docker-ce-cli \
-  containerd.io
-
-RUN groupmod -g 800 docker
-
-# Install Compose
-
-RUN curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && \
-  sudo chmod +x /usr/local/bin/docker-compose
-
 ARG UID
 ENV UID $UID
 ARG GID
@@ -53,7 +34,6 @@ RUN groupadd -g $GID $USER && \
     useradd -u $UID -g $USER -m $USER && \
     usermod -p "*" $USER && \
     usermod -aG sudo $USER && \
-    usermod -aG docker $USER && \
     echo "$USER ALL=NOPASSWD: ALL" >> /etc/sudoers.d/50-$USER
 
 ENV LANG C.UTF-8
