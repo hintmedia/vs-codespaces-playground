@@ -23,7 +23,7 @@ done
 echo "DB is ready, starting Rails."
 
 # 4: Specify a default command, in case it wasn't issued:
-if [ -z "$1" ]; then set -- rails server -p 3000 -b 0.0.0.0 "$@"; fi
+if [ -z "$1" ]; then set -- bundle exec rails server -p 3000 -b 0.0.0.0 "$@"; fi
 
 # 5: Run the checks only if the app code is executed:
 if [[ "$1" = "rails" ]]
