@@ -5,7 +5,7 @@ services:
     build:
       context: ./docker/ruby
       args:
-        - RUBY_VERSION=2.6
+        - RUBY_VERSION=2.6.5
         - BUNDLE_JOBS=15
         - BUNDLE_RETRY=2
         - NODE_VERSION=10
