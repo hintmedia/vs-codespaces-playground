@@ -26,7 +26,7 @@ echo "DB is ready, starting Rails."
 if [ -z "$1" ]; then set -- bundle exec rails server -p 3000 -b 0.0.0.0 "$@"; fi
 
 # 5: Run the checks only if the app code is executed:
-if [[ "$1" = "rails" ]]
+if [[ "$3" = "rails" ]]
 then
   # Clean up any orphaned lock file
   unlock_setup
