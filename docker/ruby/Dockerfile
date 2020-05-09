@@ -66,6 +66,8 @@ RUN mkdir -p node_modules && chown $USER:$USER node_modules
 RUN mkdir -p public/packs && chown $USER:$USER public/packs
 RUN mkdir -p tmp/cache && chown $USER:$USER tmp/cache
 
+ENV DEBIAN_FRONTEND=dialog
+
 USER $USER
 
 RUN gem install bundler
