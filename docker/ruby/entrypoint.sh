@@ -53,7 +53,7 @@ then
   # 11: If the command to execute is 'rails server', then we must remove any
   # pid file present. Suddenly killing and removing app containers might leave
   # this file, and prevent rails from starting-up if present:
-  if [[ "$2" = "s" || "$2" = "server" ]]; then rm -rf /app/tmp/pids/server.pid; fi
+  if [[ "$4" = "s" || "$4" = "server" ]]; then rm -rf /app/tmp/pids/server.pid; fi
 fi
 # 12: Replace the shell with the given command:
 exec "$@"
