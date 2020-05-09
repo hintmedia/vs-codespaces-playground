@@ -1,6 +1,8 @@
 ARG RUBY_VERSION=2.6
 FROM ruby:$RUBY_VERSION
 
+ENV SHELL=/bin/bash
+
 ARG DEBIAN_FRONTEND=noninteractive
 
 ARG NODE_VERSION=11
@@ -8,7 +10,7 @@ RUN curl -sL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash -
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
   echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update -yq && apt-get install -yq \
   apt-transport-https \
   ca-certificates \
   curl \
@@ -23,6 +25,25 @@ RUN apt-get update && apt-get install -y \
   vim \
   sudo
 
+# Install Docker (Yes, in docker)
+RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - && \
+  add-apt-repository \
+    "deb [arch=amd64] https://download.docker.com/linux/debian \
+    $(lsb_release -cs) \
+    stable"
+
+RUN apt-get update && apt-get install -yq \
+  docker-ce \
+  docker-ce-cli \
+  containerd.io
+
+RUN groupmod -g 800 docker
+
+# Install Compose
+
+RUN curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && \
+  chmod +x /usr/local/bin/docker-compose
+
 ARG UID
 ENV UID $UID
 ARG GID
@@ -31,9 +52,10 @@ ARG USER=ruby
 ENV USER $USER
 
 RUN groupadd -g $GID $USER && \
-    useradd -u $UID -g $USER -m $USER && \
+    useradd -u $UID -g $USER -m -s /bin/bash $USER && \
     usermod -p "*" $USER && \
     usermod -aG sudo $USER && \
+    usermod -aG docker $USER && \
     echo "$USER ALL=NOPASSWD: ALL" >> /etc/sudoers.d/50-$USER
 
 ENV LANG C.UTF-8
