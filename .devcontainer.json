@@ -2,7 +2,7 @@
 {
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "rails",
-	"remoteUser": "ruby",
+	"containerUser": "ruby",
 	"workspaceFolder": "/app",
 	"extensions": [
 		"rebornix.Ruby"
