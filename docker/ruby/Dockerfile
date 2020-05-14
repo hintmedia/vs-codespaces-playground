@@ -23,7 +23,8 @@ RUN apt-get update -yq && apt-get install -yq \
   git \
   netcat \
   vim \
-  sudo
+  sudo \
+  zsh
 
 # Install Docker (Yes, in docker)
 RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - && \
@@ -93,6 +94,6 @@ ENV DEBIAN_FRONTEND=dialog
 
 USER $USER
 
-RUN gem install bundler
+ENV SHELL=/bin/zsh
 
-USER $USER
+RUN gem install bundler
