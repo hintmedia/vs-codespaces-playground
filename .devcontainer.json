@@ -6,5 +6,6 @@
 	"workspaceFolder": "/app",
 	"extensions": [
 		"rebornix.Ruby"
-	]
+	],
+	"appPort": 3000
 }
